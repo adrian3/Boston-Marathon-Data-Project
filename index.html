@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Race results and analysis of the Boston Marathon from 1897 to 2019: participation, demographics, qualifying, results and performance.">
+  <meta name="author" content="Adrian Hanft">
+  <meta property="og:title" content="The Boston Marathon Data Project">
+  <meta property="og:description" content="Race results and analysis of the Boston Marathon from 1897 to 2019.">
+  <meta property="og:image" content="https://adrian3.github.io/Boston-Marathon-Data-Project/assets/img/boston-marathon-project.jpg">
+
+  <link rel="stylesheet" href="assets/css/app.css?v=1.0.2">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans:300,300i,400" rel="stylesheet">
+  <link rel="stylesheet" href="assets/durationpicker/bootstrap-duration-picker.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png">
+  <link rel="manifest" href="assets/img/favicons/site.webmanifest">
+  <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#fbb813">
+  <link rel="shortcut icon" href="assets/img/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>The Boston Marathon Data Project</title>
+
+  <style media="screen">
+.output {
+  max-width: 600px;
+  overflow-wrap: break-word;
+}
+.bdp-block.hidden {
+  display: none;
+}
+
+
+.fixed_headers {
+  table-layout: fixed;
+}
+.fixed_headers th,
+.fixed_headers td {
+  text-align: left;
+}
+.fixed_headers td:nth-child(1),
+.fixed_headers th:nth-child(1) {
+  min-width: 80px;
+}
+.fixed_headers td:nth-child(2),
+.fixed_headers th:nth-child(2) {
+  min-width: 250px;
+}
+.fixed_headers td:nth-child(3),
+.fixed_headers th:nth-child(3) {
+  min-width: 230px;
+}
+.fixed_headers td:nth-child(4),
+.fixed_headers th:nth-child(4) {
+  min-width: 175px;
+}
+.fixed_headers td:nth-child(5),
+.fixed_headers th:nth-child(5) {
+  min-width: 150px;
+}
+.fixed_headers td:nth-child(6),
+.fixed_headers th:nth-child(6) {
+  min-width: 150px;
+}
+.fixed_headers thead tr {
+  display: block;
+  position: relative;
+}
+.fixed_headers tbody {
+  display: block;
+  overflow: auto;
+  width: 100%;
+  height: 360px;
+}
+.fixed_headers tr {
+    width: 100%;
+    display: block;
+}
+ol li {
+  color: #777;
+}
+h2 {
+  margin-top: 20px;
+}
+.leaderboard-status {
+  color: #777;
+}
+.footer p.made-by {
+  text-align: center;
+  padding: 0 0 25px 0;
+}
+.footer p.made-by a {
+  color: #777;
+  font-size: 14px;
+}
+  </style>
+</head>
+
+<body>
+
+<div class="header" style="padding-left:20px; padding-top: 10px;">
+  <div class="grid-x">
+    <div class="cell small-12 medium-3">
+      <a class="" href="#/">
+
+<svg id="bostonLogo" style="width: 210px; height: 72px; margin-top: 10px;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   width="175px" height="60px" viewBox="0 0 175 60" enable-background="new 0 0 175 60" xml:space="preserve">
+<g>
+  <path fill="#6D6E71" d="M6.302,43.623H3.756v13.237H2.738V43.623H0.193v-1.019h6.109V43.623z"/>
+  <path fill="#6D6E71" d="M13.468,56.859h-0.916v-7.738c0-0.51-0.408-0.917-0.917-0.917h-1.527c-0.488,0-0.917,0.407-0.917,0.917
+    v7.738H8.276V42.604h0.916v5.6c0.205-0.61,0.713-0.917,1.467-0.917h0.978c1.039,0,1.833,0.794,1.833,1.834V56.859z"/>
+  <path fill="#6D6E71" d="M21.164,52.725h-4.277v2.302c0,0.51,0.429,0.916,0.917,0.916h2.688v0.917h-2.688
+    c-0.997,0-1.833-0.836-1.833-1.833v-5.905c0-0.998,0.835-1.834,1.833-1.834h1.527c1.039,0,1.833,0.836,1.833,1.834V52.725z
+     M20.248,51.81v-2.688c0-0.51-0.408-0.917-0.917-0.917h-1.527c-0.488,0-0.917,0.407-0.917,0.917v2.688H20.248z"/>
+  <path fill="#6D6E71" d="M36.25,56.859h-1.017V44.253l-2.913,10.569h-0.651l-2.912-10.569v12.606h-1.018V42.604h1.548l2.708,9.917
+    l2.708-9.917h1.548V56.859z"/>
+  <path fill="#6D6E71" d="M43.619,56.859h-0.917v-0.774c-0.123,0.469-0.57,0.774-1.203,0.774h-1.201
+    c-0.997,0-1.873-0.836-1.873-1.833v-1.793c0-1.079,0.794-1.832,1.833-1.832h1.241c0.632,0,1.08,0.305,1.203,0.773v-3.054
+    c0-0.51-0.408-0.917-0.917-0.917h-2.667v-0.917h2.667c1.039,0,1.834,0.836,1.834,1.834V56.859z M42.702,53.233
+    c0-0.487-0.408-0.916-0.917-0.916h-1.507c-0.509,0-0.916,0.429-0.916,0.916v1.793c0,0.51,0.407,0.916,0.916,0.916h1.507
+    c0.509,0,0.917-0.406,0.917-0.916V53.233z"/>
+  <path fill="#6D6E71" d="M49.46,48.204h-1.528c-0.487,0-0.917,0.407-0.917,0.917v7.738H46.1v-9.572h0.916v0.917
+    c0.204-0.61,0.713-0.917,1.466-0.917h0.978V48.204z"/>
+  <path fill="#6D6E71" d="M55.283,56.859h-0.917v-0.774c-0.123,0.469-0.57,0.774-1.203,0.774h-1.201
+    c-0.997,0-1.873-0.836-1.873-1.833v-1.793c0-1.079,0.793-1.832,1.833-1.832h1.242c0.632,0,1.08,0.305,1.203,0.773v-3.054
+    c0-0.51-0.408-0.917-0.917-0.917h-2.668v-0.917h2.668c1.039,0,1.833,0.836,1.833,1.834V56.859z M54.367,53.233
+    c0-0.487-0.408-0.916-0.917-0.916h-1.507c-0.509,0-0.917,0.429-0.917,0.916v1.793c0,0.51,0.407,0.916,0.917,0.916h1.507
+    c0.509,0,0.917-0.406,0.917-0.916V53.233z"/>
+  <path fill="#6D6E71" d="M61.064,56.859h-0.917c-0.998,0-1.833-0.836-1.833-1.833v-6.822h-1.426v-0.917h1.426v-2.851h0.916v2.851
+    h1.833v0.917H59.23v6.822c0,0.51,0.407,0.916,0.917,0.916h0.917V56.859z"/>
+  <path fill="#6D6E71" d="M68.229,56.859h-0.916v-7.738c0-0.51-0.407-0.917-0.917-0.917H64.87c-0.488,0-0.917,0.407-0.917,0.917
+    v7.738h-0.916V42.604h0.916v5.6c0.204-0.61,0.713-0.917,1.468-0.917h0.977c1.039,0,1.832,0.794,1.832,1.834V56.859z"/>
+  <path fill="#6D6E71" d="M75.925,55.026c0,0.997-0.793,1.833-1.832,1.833h-1.528c-0.997,0-1.833-0.836-1.833-1.833v-5.905
+    c0-1.04,0.836-1.834,1.833-1.834h1.528c1.039,0,1.832,0.794,1.832,1.834V55.026z M75.009,49.121c0-0.51-0.407-0.917-0.917-0.917
+    h-1.528c-0.488,0-0.917,0.407-0.917,0.917v5.905c0,0.51,0.429,0.916,0.917,0.916h1.528c0.509,0,0.917-0.406,0.917-0.916V49.121z"/>
+  <path fill="#6D6E71" d="M83.6,56.859h-0.916v-7.738c0-0.51-0.408-0.917-0.917-0.917H80.24c-0.488,0-0.917,0.407-0.917,0.917v7.738
+    h-0.916v-9.572h0.916v0.917c0.205-0.61,0.713-0.917,1.468-0.917h0.977c1.039,0,1.833,0.794,1.833,1.834V56.859z"/>
+  <path fill="#6D6E71" d="M96.283,54.822c0,1.12-0.917,2.037-2.037,2.037h-4.072V42.604h4.072c1.12,0,2.037,0.916,2.037,2.037V54.822
+    z M95.265,44.641c0-0.572-0.448-1.019-1.019-1.019h-3.054v12.218h3.054c0.57,0,1.019-0.448,1.019-1.019V44.641z"/>
+  <path fill="#6D6E71" d="M103.674,56.859h-0.917v-0.774c-0.124,0.469-0.57,0.774-1.202,0.774h-1.202
+    c-0.997,0-1.873-0.836-1.873-1.833v-1.793c0-1.079,0.795-1.832,1.833-1.832h1.243c0.631,0,1.078,0.305,1.202,0.773v-3.054
+    c0-0.51-0.408-0.917-0.917-0.917h-2.667v-0.917h2.667c1.04,0,1.833,0.836,1.833,1.834V56.859z M102.757,53.233
+    c0-0.487-0.408-0.916-0.917-0.916h-1.506c-0.509,0-0.917,0.429-0.917,0.916v1.793c0,0.51,0.408,0.916,0.917,0.916h1.506
+    c0.509,0,0.917-0.406,0.917-0.916V53.233z"/>
+  <path fill="#6D6E71" d="M109.455,56.859h-0.916c-0.999,0-1.832-0.836-1.832-1.833v-6.822h-1.426v-0.917h1.426v-2.851h0.916v2.851
+    h1.833v0.917h-1.833v6.822c0,0.51,0.408,0.916,0.917,0.916h0.916V56.859z"/>
+  <path fill="#6D6E71" d="M116.316,56.859H115.4v-0.774c-0.123,0.469-0.57,0.774-1.203,0.774h-1.201
+    c-0.997,0-1.873-0.836-1.873-1.833v-1.793c0-1.079,0.793-1.832,1.833-1.832h1.242c0.632,0,1.08,0.305,1.203,0.773v-3.054
+    c0-0.51-0.408-0.917-0.917-0.917h-2.668v-0.917h2.668c1.039,0,1.833,0.836,1.833,1.834V56.859z M115.4,53.233
+    c0-0.487-0.408-0.916-0.917-0.916h-1.507c-0.509,0-0.917,0.429-0.917,0.916v1.793c0,0.51,0.407,0.916,0.917,0.916h1.507
+    c0.509,0,0.917-0.406,0.917-0.916V53.233z"/>
+  <path fill="#6D6E71" d="M128.979,49.121c0,1.12-0.896,2.036-2.037,2.036h-3.054v5.702h-1.019V42.604h4.072
+    c1.12,0,2.037,0.916,2.037,2.037V49.121z M127.96,44.641c0-0.572-0.448-1.019-1.019-1.019h-3.054v6.517h3.054
+    c0.57,0,1.019-0.448,1.019-1.019V44.641z"/>
+  <path fill="#6D6E71" d="M134.311,48.204h-1.527c-0.488,0-0.917,0.407-0.917,0.917v7.738h-0.916v-9.572h0.916v0.917
+    c0.205-0.61,0.714-0.917,1.467-0.917h0.978V48.204z"/>
+  <path fill="#6D6E71" d="M141.05,55.026c0,0.997-0.795,1.833-1.833,1.833h-1.527c-0.997,0-1.833-0.836-1.833-1.833v-5.905
+    c0-1.04,0.835-1.834,1.833-1.834h1.527c1.038,0,1.833,0.794,1.833,1.834V55.026z M140.134,49.121c0-0.51-0.408-0.917-0.917-0.917
+    h-1.527c-0.489,0-0.917,0.407-0.917,0.917v5.905c0,0.51,0.428,0.916,0.917,0.916h1.527c0.509,0,0.917-0.406,0.917-0.916V49.121z"/>
+  <path fill="#6D6E71" d="M144.448,58.081c0,0.978-0.834,1.833-1.832,1.833h-0.917v-0.916h0.917c0.509,0,0.917-0.408,0.917-0.917
+    V47.287h0.916V58.081z M144.001,45.149c-0.387,0-0.693-0.305-0.693-0.672c0-0.367,0.306-0.672,0.693-0.672
+    c0.367,0,0.672,0.305,0.672,0.672C144.673,44.844,144.368,45.149,144.001,45.149z"/>
+  <path fill="#6D6E71" d="M152.146,52.725h-4.277v2.302c0,0.51,0.428,0.916,0.917,0.916h2.688v0.917h-2.688
+    c-0.998,0-1.833-0.836-1.833-1.833v-5.905c0-0.998,0.834-1.834,1.833-1.834h1.528c1.038,0,1.833,0.836,1.833,1.834V52.725z
+     M151.23,51.81v-2.688c0-0.51-0.407-0.917-0.917-0.917h-1.528c-0.489,0-0.917,0.407-0.917,0.917v2.688H151.23z"/>
+  <path fill="#6D6E71" d="M159.841,55.026c0,0.997-0.795,1.833-1.833,1.833h-1.527c-0.998,0-1.832-0.836-1.832-1.833v-5.905
+    c0-0.998,0.834-1.834,1.832-1.834h1.527c1.038,0,1.833,0.836,1.833,1.834v1.363h-0.916v-1.363c0-0.51-0.407-0.917-0.917-0.917
+    h-1.527c-0.488,0-0.917,0.407-0.917,0.917v5.905c0,0.51,0.429,0.916,0.917,0.916h1.527c0.51,0,0.917-0.406,0.917-0.916v-1.385
+    h0.916V55.026z"/>
+  <path fill="#6D6E71" d="M165.643,56.859h-0.917c-0.999,0-1.833-0.836-1.833-1.833v-6.822h-1.425v-0.917h1.425v-2.851h0.916v2.851
+    h1.834v0.917h-1.834v6.822c0,0.51,0.408,0.916,0.917,0.916h0.917V56.859z"/>
+</g>
+<polygon id="arrow" points="174.523,52.035 169.512,47.287 170.734,52.066 169.586,56.859 "/>
+<g>
+  <path d="M13.621,0H2.634h-2.747v2.747h2.747V38.46h10.987c3.022,0,5.495-2.473,5.495-5.495V22.363c0-2.201-1.045-3.738-2.748-4.232
+    c1.703-0.494,2.748-2.031,2.748-4.229V5.495C19.116,2.472,16.643,0,13.621,0z M16.368,32.965c0,1.538-1.208,2.747-2.747,2.747
+    h-8.24V19.506h8.24c1.54,0,2.747,1.207,2.747,2.745V32.965z M16.368,14.011c0,1.537-1.208,2.747-2.747,2.747h-8.24V2.747h8.24
+    c1.54,0,2.747,1.21,2.747,2.748V14.011z"/>
+  <path d="M34.882,12.637h-4.123c-2.692,0-4.945,2.143-4.945,4.944v15.935c0,2.69,2.253,4.945,4.945,4.945h4.123
+    c2.801,0,4.944-2.254,4.944-4.945V17.581C39.826,14.78,37.683,12.637,34.882,12.637z M37.354,33.515c0,1.372-1.1,2.472-2.472,2.472
+    h-4.123c-1.318,0-2.472-1.1-2.472-2.472V17.581c0-1.372,1.153-2.472,2.472-2.472h4.123c1.373,0,2.472,1.1,2.472,2.472V33.515z"/>
+  <path d="M55.592,12.637H51.47c-2.691,0-4.945,2.253-4.945,4.944v3.132c0,1.923,1.209,3.354,2.967,4.232l7.032,3.407
+    c1.045,0.494,1.541,1.263,1.541,2.307v2.857c0,1.372-1.1,2.472-2.473,2.472H51.47c-1.319,0-2.473-1.1-2.473-2.472v-2.638h-2.472
+    v2.638c0,2.69,2.253,4.945,4.945,4.945h4.122c2.802,0,4.945-2.254,4.945-4.945v-3.076c0-1.926-1.209-3.354-2.968-4.232L50.536,22.8
+    c-1.043-0.494-1.539-1.262-1.539-2.307v-2.913c0-1.372,1.154-2.472,2.473-2.472h4.122c1.374,0,2.473,1.1,2.473,2.472v2.582h2.472
+    v-2.582C60.537,14.89,58.394,12.637,55.592,12.637z"/>
+  <path d="M71.193,4.945h-2.472v7.692h-3.848v2.472h3.848v18.407c0,2.69,2.253,4.945,4.943,4.945h2.473v-2.473h-2.473
+    c-1.375,0-2.472-1.1-2.472-2.472V15.108h4.945v-2.472h-4.945V4.945z"/>
+  <path d="M90.53,12.637h-4.121c-2.692,0-4.945,2.143-4.945,4.944v15.935c0,2.69,2.253,4.945,4.945,4.945h4.121
+    c2.802,0,4.945-2.254,4.945-4.945V17.581C95.476,14.78,93.332,12.637,90.53,12.637z M93.003,33.515c0,1.372-1.1,2.472-2.473,2.472
+    h-4.121c-1.318,0-2.472-1.1-2.472-2.472V17.581c0-1.372,1.154-2.472,2.472-2.472h4.121c1.374,0,2.473,1.1,2.473,2.472V33.515z"/>
+  <path d="M111.241,12.637h-2.638c-2.031,0-3.407,0.825-3.957,2.472v-2.472h-2.472V38.46h2.472V17.581
+    c0-1.372,1.153-2.472,2.473-2.472h4.121c1.374,0,2.473,1.1,2.473,2.472V38.46h2.472V17.581
+    C116.187,14.78,114.042,12.637,111.241,12.637z"/>
+  <rect x="76.138" y="35.987" fill="#000000" width="2.473" height="2.473"/>
+</g>
+<g>
+  <rect id="dot1" x="-0.113" fill="#000000" width="2.747" height="2.747"/>
+  <rect id="dot2" x="2.634" y="35.713" fill="#000000" width="2.747" height="2.747"/>
+  <rect id="dot3" x="31.447" y="24.175" fill="#ffffff" width="2.747" height="2.747"/>
+  <rect id="dot4" x="46.547" y="30.894" fill="#000000" width="2.467" height="2.467"/>
+  <rect id="dot5" x="58.07" y="17.736" fill="#000000" width="2.467" height="2.467"/>
+  <rect id="dot6" x="68.782" y="12.637" fill="#000000" width="2.473" height="2.473"/>
+  <rect id="dot7" x="76.138" y="35.987" fill="#000000" width="2.473" height="2.473"/>
+  <rect id="dot8" x="87.096" y="24.175" fill="#FFFFFF" width="2.747" height="2.747"/>
+  <rect id="dot9" x="113.719" y="35.993" fill="#000000" width="2.467" height="2.467"/>
+</g>
+
+<!-- <rect id="dot10" fill="#ffffff" x="9.03" y="26.508" width="2.747" height="2.747"/>
+<rect id="dot11" fill="#ffffff" x="107.807" y="24.175" width="2.747" height="2.747"/>
+<rect id="dot12" fill="#ffffff" x="107.807" y="35.993" width="2.747" height="2.747"/>
+<rect id="dot13" fill="#ffffff" x="63.5" y="35.993" width="2.747" height="2.747"/>
+<rect id="dot14" fill="#ffffff" x="42.246" y="35.993" width="2.747" height="2.747"/>
+<rect id="dot15" fill="#ffffff" x="21.164" y="35.993" width="2.747" height="2.747"/>
+<rect id="dot16" fill="#ffffff" x="107.807" y="4.945" width="2.747" height="2.747"/>
+<rect id="dot17" fill="#ffffff" x="87.096" y="4.945" width="2.747" height="2.747"/>
+<rect id="dot18" fill="#ffffff" x="52.158" y="4.945" width="2.747" height="2.747"/>
+<rect id="dot19" fill="#ffffff" x="58.07" y="21.703" width="2.747" height="2.747"/>
+<rect id="dot20" fill="#ffffff" x="46.407" y="26.508" width="2.747" height="2.747"/>
+<rect id="dot21" fill="#ffffff" x="31.447" y="0" width="2.747" height="2.747"/>
+<rect id="dot22" fill="#ffffff" x="21.164" y="16.875" width="2.747" height="2.747"/>
+<rect id="dot23" fill="#ffffff" x="9.03" y="8.508" width="2.747" height="2.747"/>
+<rect id="dot24" fill="#ffffff" x="68.645" width="2.747" height="2.747"/> -->
+
+</svg>
+
+
+      </a>
+
+</div>
+  </div>
+</div>
+
+<div id="app" class="boston">
+  <boston v-bind:boston-data="bostonData"></boston>
+</div>
+
+<!-- Libraries (same versions the tread1st build bundled) -->
+<script src="assets/js/vendor/jquery.min.js"></script>
+<script src="assets/js/vendor/what-input.min.js"></script>
+<script src="assets/js/vendor/highstock.js"></script>
+<script src="assets/js/vendor/snap.svg-min.js"></script>
+<script src="assets/js/vendor/vue.min.js"></script>
+<script src="assets/js/vendor/vue-router.js"></script>
+<script src="assets/js/highcharts-theme.js"></script>
+<script src="assets/durationpicker/bootstrap-duration-picker.js"></script>
+
+<!-- Pre-computed summaries used by the charts -->
+<script src="assets/data/qualifiers.js"></script>
+<script src="assets/data/subQualifierTimes.js"></script>
+<script src="assets/data/ageCounts.js"></script>
+<script src="assets/data/winners.js"></script>
+<script src="assets/data/averages.js"></script>
+<script src="assets/data/ageDistribution.js"></script>
+<script src="assets/data/year-counts.js"></script>
+
+<script src="assets/js/boston.js"></script>
+<script src="assets/js/boston-data.js"></script>
+<script src="assets/js/boston-app.js"></script>
+
+<div class="grid-x footer align-center">
+  <div class="cell">
+    <p class="made-by"><a href="https://adrian3.com">Made by Ade</a></p>
+  </div>
+</div>
+
+</body>
+</html>
